@@ -1,0 +1,340 @@
+/**
+ * main.css - 核心样式
+ * 定义游戏的像素风格及治愈系色彩。
+ */
+
+/* 引入本地中文字体 (请确保 assets/fonts/ipix.ttf 存在) */
+@font-face {
+    font-family: 'PixelZh';
+    src: url('../assets/fonts/ipix.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a1a; /* 基础深色背景 */
+    color: #f1faee; /* 萤光白文字 */
+    /* 优先使用中英文像素字体，后备 monospace */
+    font-family: 'Press Start 2P', 'PixelZh', 'Courier New', monospace; 
+    overflow: hidden; /* 防止滚动条 */
+}
+
+#game-container {
+    max-width: 600px;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    /* 背景图设置 */
+    background-color: #1a1a1a; /* 图片加载前的兜底色 */
+    background-image: url('../assets/images/001_Cover_startgame.png');
+    background-size: cover; /* 确保覆盖全屏，边缘会被裁剪 */
+    background-position: center center; /* 居中对齐，建议关键内容在画面中心 */
+    background-repeat: no-repeat;
+    /* 推荐背景图规格: 1080x2400px, 核心内容在中心 800x1600px 区域 */
+    
+    box-shadow: 0 0 20px rgba(0,0,0,0.5); /* 容器阴影 */
+}
+
+/* 屏幕通用样式 */
+.screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center;  <-- 原本是居中 */
+    justify-content: flex-start; /* 改为从顶部开始 */
+    align-items: center;
+    padding: 20px;
+    padding-top: 16vh; /* 顶部留白约 1/6 (16.66%) */
+    background-color: rgba(0, 0, 0, 0.3); /* 半透明遮罩，增强文字可读性 */
+    text-align: center;
+}
+
+/* 游戏标题 */
+.game-title {
+    font-size: 2.5rem;
+    color: #A8DADC; /* 灵雾青 */
+    text-shadow: 4px 4px 0 #1D3557; /* 像素投影 */
+    margin-bottom: 3rem;
+    line-height: 1.5;
+}
+
+.subtitle {
+    font-size: 0.8rem;
+    color: #F1FAEE;
+    text-shadow: 2px 2px 0 #1D3557;
+    display: block;
+    margin-top: 10px;
+}
+
+/* 菜单按钮容器 */
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 300px;
+    
+    /* 
+     * 布局调整：
+     * 使用 margin-top: auto 将按钮组推向底部
+     * 使用 margin-bottom: 40vh 将其保持在"中央偏下方一点点"的位置
+     * (40vh 意味着距离底部还有 40% 的高度，大约在屏幕 60% 处)
+     */
+    margin-top: auto;
+    margin-bottom: 40vh; 
+}
+
+/* 像素风格按钮 - 继承 Spectre .btn 并进行重写 */
+.btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1rem;
+    padding: 15px 20px;
+    height: auto; /* 覆盖 Spectre 的固定高度 */
+    
+    /* 透明背景: 75%透明 (0.25 alpha) - 使用黑色遮罩让背景透出 */
+    background: rgba(0, 0, 0, 0.25); 
+    color: #F1FAEE;
+    
+    /* 边框: 1px实线，白色30%透明 */
+    border: 1px solid rgba(241, 250, 238, 0.3);
+    border-radius: 6px; /* 圆角 */
+    
+    /* 阴影: 轻微阴影提升层次 */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    
+    cursor: pointer;
+    /* 过渡: 200ms ease-out */
+    transition: all 200ms ease-out;
+    text-transform: uppercase;
+    position: relative;
+    /* 确保文字清晰 */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* 主按钮 (Start) - 对应 Spectre .btn-primary */
+.btn.btn-primary {
+    background: rgba(0, 0, 0, 0.25);
+    border-color: rgba(241, 250, 238, 0.3);
+    color: #F1FAEE;
+}
+
+/* 按钮悬停效果 - 覆盖 Spectre :hover */
+.btn:focus, .btn:hover, .btn.btn-primary:focus, .btn.btn-primary:hover {
+    /* 背景: 过渡为40%-50%透明 (0.5 alpha) */
+    background: rgba(0, 0, 0, 0.5);
+    
+    /* 边框: 颜色加深至60%-70%不透明 */
+    border-color: rgba(241, 250, 238, 0.7);
+    color: #F1FAEE;
+    
+    /* 外发光: 主题色(灵雾青)光晕 */
+    box-shadow: 0 0 8px rgba(168, 218, 220, 0.4);
+    
+    /* 位移 */
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+/* 按钮点击效果 - 覆盖 Spectre :active */
+.btn:active, .btn.active, .btn.btn-primary:active, .btn.btn-primary.active {
+    transform: translateY(0);
+    box-shadow: 0 0 4px rgba(168, 218, 220, 0.2);
+    background: rgba(0, 0, 0, 0.6);
+    border-color: rgba(241, 250, 238, 0.7);
+    color: #F1FAEE;
+}
+
+/* 禁用状态 */
+.btn:disabled, .btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* 移动端适配 */
+@media (max-width: 480px) {
+    .game-title {
+        font-size: 1.8rem;
+    }
+    .pixel-btn {
+        padding: 12px;
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+}
+
+/* =========================================
+   游戏主界面样式 (Game Screen UI)
+   ========================================= */
+
+#game-screen {
+    justify-content: space-between; /* 上下分布 */
+    padding: 10px; /* 减少内边距以最大化空间 */
+    background: transparent; /* 去除遮罩，直接显示背景 */
+    gap: 10px;
+}
+
+/* A. 场景插画区域 */
+#scene-display {
+    width: 100%;
+    /* 
+     * 设置 4:3 宽高比 
+     * 100% 宽度对应的 3/4 高度，通过 aspect-ratio 属性实现
+     */
+    aspect-ratio: 4 / 3;
+    height: auto; /* 高度自适应 */
+    background-color: #eaddcf; /* 复古米色背景 */
+    border: 4px solid #8b5a2b; /* 木质边框 */
+    box-shadow: inset 0 0 20px rgba(139, 90, 43, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #8b5a2b;
+    position: relative;
+    border-radius: 8px;
+    /* 确保图片不溢出 */
+    overflow: hidden; 
+}
+
+/* 下半部分容器 */
+#lower-area {
+    display: flex;
+    width: 100%;
+    /* 
+     * 自动计算剩余高度 
+     * 使用 flex-grow: 1 填满除插画外的剩余空间 
+     */
+    flex: 1; 
+    height: auto; /* 不再强制固定高度 */
+    gap: 10px;
+    min-height: 0; /* 允许子元素滚动 */
+    overflow: hidden; /* 防止撑破容器 */
+}
+
+/* B. 剧情与选项区域 (羊皮纸风格) */
+#story-panel {
+    flex: 3; /* 占据 75% */
+    background-color: #fdf6e3; /* 羊皮纸色 */
+    border: 1px solid #d6c6ac;
+    border-radius: 4px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 
+        0 4px 6px rgba(0,0,0,0.1),
+        inset 0 0 30px rgba(169, 142, 104, 0.2); /* 纸张陈旧感 */
+    position: relative;
+}
+/* 卷轴顶部装饰 */
+#story-panel::before {
+    content: '';
+    position: absolute;
+    top: -6px; left: 2px; right: 2px;
+    height: 10px;
+    background: #eaddcf;
+    border: 1px solid #8b5a2b;
+    border-radius: 5px;
+    z-index: 1;
+}
+/* 卷轴底部装饰 */
+#story-panel::after {
+    content: '';
+    position: absolute;
+    bottom: -6px; left: 2px; right: 2px;
+    height: 10px;
+    background: #eaddcf;
+    border: 1px solid #8b5a2b;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+#story-text {
+    color: #433422;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    text-align: left;
+    overflow-y: auto;
+    text-shadow: none; /* 去除全局文字阴影，保证阅读舒适 */
+}
+
+#choices-area {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* 选项按钮样式微调 */
+.choice-btn {
+    background: rgba(139, 90, 43, 0.1);
+    border: 2px solid #8b5a2b;
+    color: #5e3a18;
+    text-align: left;
+    padding-left: 15px;
+    font-size: 0.8rem;
+    height: auto;
+    min-height: 40px;
+    white-space: normal;
+}
+.choice-btn:hover {
+    background: rgba(139, 90, 43, 0.2);
+    border-color: #5e3a18;
+    color: #433422;
+    transform: translateX(2px);
+}
+
+/* C. 侧边栏 */
+#sidebar-panel {
+    flex: 1; /* 占据 25% */
+    background: #eaddcf;
+    border: 3px solid #8b5a2b;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 5px;
+    gap: 15px;
+}
+
+.avatar-placeholder {
+    width: 48px;
+    height: 48px;
+    background: #c2b280;
+    border: 2px solid #5e3a18;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.status-bars {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bar-container {
+    width: 100%;
+    height: 8px;
+    background: #433422;
+    border: 1px solid #fff;
+}
+
+.hp-bar .bar-fill { background: #e74c3c; height: 100%; }
+.mp-bar .bar-fill { background: #3498db; height: 100%; }
+
+.sidebar-menu {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

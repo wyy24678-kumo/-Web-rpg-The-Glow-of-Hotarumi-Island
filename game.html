@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅途 - 萤见岛的微光</title>
+    <!-- 引入像素字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/lib/spectre.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* 游戏页面特定样式 */
+        body {
+            background-color: #222222; /* 深灰背景 */
+            background-image: none; /* 移除封面图 */
+        }
+        #game-container {
+            background-image: none; /* 移除容器背景 */
+            box-shadow: none;
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <!-- 游戏主界面 -->
+        <div id="game-screen" class="screen">
+            <!-- A. 场景插画区域 (Top 35%) -->
+            <div id="scene-display" class="pixel-panel">
+                <!-- 替换为生成的图片 -->
+                <img src="assets/images/scene_illustration.png" alt="Scene Illustration" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+            </div>
+
+            <!-- 下半部分容器 (Bottom 65%) -->
+            <div id="lower-area">
+                <!-- B. 剧情与选项区域 (Left) -->
+                <div id="story-panel" class="scroll-panel">
+                    <div id="story-text">
+                        <p>剧情文本占位符：<br>勇者来到了古老的森林，这里弥漫着微光...</p>
+                    </div>
+                    <div id="choices-area">
+                        <button class="btn btn-block choice-btn">1. 探索森林</button>
+                        <button class="btn btn-block choice-btn">2. 与村民交谈</button>
+                        <button class="btn btn-block choice-btn">3. 离开此处</button>
+                    </div>
+                </div>
+
+                <!-- C. 侧边栏 (Right) -->
+                <div id="sidebar-panel" class="pixel-panel">
+                    <div class="character-status">
+                        <div class="avatar-placeholder">👤</div>
+                        <div class="status-bars">
+                            <div class="bar-container hp-bar"><div class="bar-fill" style="width: 80%"></div></div>
+                            <div class="bar-container mp-bar"><div class="bar-fill" style="width: 60%"></div></div>
+                        </div>
+                    </div>
+                    <div class="sidebar-menu">
+                        <button class="btn btn-action btn-sm">🎒</button>
+                        <button class="btn btn-action btn-sm">⚙️</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏页专属逻辑 -->
+    <script src="scripts/save.js"></script>
+    <script src="scripts/game.js"></script>
+</body>
+</html>

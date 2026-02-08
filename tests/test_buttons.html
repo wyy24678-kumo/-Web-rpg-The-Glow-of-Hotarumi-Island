@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Button Component Tests</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../styles/lib/spectre.min.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <style>
+        body { padding: 20px; background: #333; color: white; }
+        .test-case { margin-bottom: 20px; border: 1px solid #555; padding: 10px; }
+        .pass { color: #32b643; }
+        .fail { color: #e85600; }
+    </style>
+</head>
+<body>
+    <h1>Unit Tests: Button Component</h1>
+    <div id="test-output"></div>
+    
+    <!-- 隐藏的测试容器 -->
+    <div id="fixture" style="visibility: hidden;">
+        <button id="test-btn" class="btn btn-primary">Test Button</button>
+    </div>
+
+    <script>
+        const output = document.getElementById('test-output');
+        const fixture = document.getElementById('fixture');
+        const btn = document.getElementById('test-btn');
+
+        function assert(condition, message) {
+            const div = document.createElement('div');
+            if (condition) {
+                div.textContent = `✅ PASS: ${message}`;
+                div.className = 'pass';
+            } else {
+                div.textContent = `❌ FAIL: ${message}`;
+                div.className = 'fail';
+                console.error('FAIL:', message);
+            }
+            output.appendChild(div);
+        }
+
+        function runTests() {
+            // Test 1: Class names presence
+            assert(btn.classList.contains('btn'), 'Button has .btn class');
+            assert(btn.classList.contains('btn-primary'), 'Button has .btn-primary class');
+
+            // Test 2: Computed Styles (Glassmorphism check)
+            const style = window.getComputedStyle(btn);
+            assert(style.backgroundColor.includes('rgba(0, 0, 0, 0.25)'), 'Background is 25% transparent black');
+            assert(style.borderRadius === '6px', 'Border radius is 6px');
+            assert(style.fontFamily.includes('Press Start 2P'), 'Font is pixel font');
+
+            // Test 3: Hover State Simulation (Manual check mostly, but we can check transition prop)
+            assert(style.transition.includes('all 0.2s ease-out') || style.transition.includes('all 200ms ease-out'), 'Transition is set');
+
+            // Test 4: Accessibility
+            // Spectre adds focus styles, we preserved them.
+            // Check if it's focusable
+            btn.focus();
+            assert(document.activeElement === btn, 'Button is focusable');
+            
+            // Test 5: Disabled State
+            btn.disabled = true;
+            const disabledStyle = window.getComputedStyle(btn);
+            assert(disabledStyle.cursor === 'not-allowed', 'Disabled cursor is correct');
+            btn.disabled = false;
+        }
+
+        window.onload = runTests;
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>萤见之岛的微光 - The Glow of Hotarumi Island</title>
+    <!-- 引入像素字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/lib/spectre.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- 主菜单界面 -->
+        <div id="main-menu" class="screen">
+            <h1 class="game-title">萤见岛的微光<br><span class="subtitle">The Glow of Hotarumi Island</span></h1>
+            <div class="menu-buttons">
+                <!-- 使用 Spectre 类名 btn btn-primary btn-lg -->
+                <button id="btn-start" class="btn btn-primary btn-lg">开始旅途</button>
+                <button id="btn-continue" class="btn btn-primary btn-lg">继续旅途</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 核心逻辑脚本 -->
+    <script src="scripts/save.js"></script>
+    <script src="scripts/ui.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
